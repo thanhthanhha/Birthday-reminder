@@ -1,17 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import Birthday from './component/birthday';
-import Header from './component/header';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import { Helmet } from "react-helmet";
+import ReactDOM from "react-dom";
+import "./index.css";
+import Birthday from "./component/birthday";
+import Header from "./component/header";
+import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Birthday/>
+    <Birthday />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
-ReactDOM.render(<Header/>, document.getElementById('head'));
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
