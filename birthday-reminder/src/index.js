@@ -1,15 +1,13 @@
 import React from "react";
-import { Helmet } from "react-helmet";
 import ReactDOM from "react-dom";
 import "./index.css";
 import Birthday from "./component/birthday";
-import Header from "./component/header";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
-  <React.StrictMode>
+  <React.Fragment>
     <Birthday />
-  </React.StrictMode>,
+  </React.Fragment>,
   document.getElementById("root")
 );
 

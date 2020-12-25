@@ -1,0 +1,46 @@
+{
+  "people": [
+    {
+      "id": 1,
+      "name": "Julian Fayard",
+      "birthday": "2003-11-20",
+      "img": "/Images/julian.jpeg"
+    },
+    {
+      "id": 2,
+      "name": "Paulie Brokaw",
+      "birthday": "2002-04-13",
+      "img": "/Images/Paulie.JPG"
+    },
+    {
+      "id": 3,
+      "name": "Scott Tucker",
+      "birthday": "2003-10Scott Tucket-12",
+      "img": "/Images/Scott.JPG"
+    },
+    {
+      "id": 4,
+      "name": "Chrissy Chlapecka",
+      "birthday": "1999-04-18",
+      "img": "/Images/Chrissy.jpeg"
+    },
+    {
+      "id": 5,
+      "name": "Lola",
+      "birthday": "2005-03-2005",
+      "img": "/Images/Lola.JPG"
+    },
+    {
+      "id": 6,
+      "name": "Kyle Thomas",
+      "birthday": "2001-09-20",
+      "img": "/Images/Kyle.jpeg"
+    },
+    {
+      "id": 7,
+      "name": "Ked Merwin",
+      "birthday": "2003-10-27",
+      "img": "/Images/Ked.jpeg"
+    }
+  ]
+}
