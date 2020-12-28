@@ -1,16 +1,8 @@
-<<<<<<< HEAD
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import Birthday from './component/birthday';
-import reportWebVitals from './reportWebVitals';
-=======
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import Birthday from "./component/birthday";
 import reportWebVitals from "./reportWebVitals";
->>>>>>> af362318bfe7d7377ae04d223a9fe167bbc52177
 
 ReactDOM.render(
   <React.Fragment>

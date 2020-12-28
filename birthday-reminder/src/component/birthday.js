@@ -1,14 +1,4 @@
 import { Helmet } from "react-helmet";
-<<<<<<< HEAD
-import favicon from '../icon.png'
-const Birthday = () => {
-    return <> 
-    <h2>Birthday Reminder</h2>
-    <Helmet>
-        <title>Birthday Reminder</title>
-            <link rel="icon" type="image/png" href={favicon}/>
-    </Helmet>
-=======
 import peopledata from "../data.json";
 import React from "react";
 
@@ -27,25 +17,31 @@ const Birthday = () => {
 
 const PeopleList = () => {
   //const People = JSON.parse(peopledata);
-  console.log(peopledata);
   return (
     <>
       {peopledata.people.map((person) => {
         return <Person key={person.id} {...person}></Person>;
       })}
->>>>>>> af362318bfe7d7377ae04d223a9fe167bbc52177
     </>
   );
 };
 const Person = (props) => {
-  const CountDown = (birthday) => {
-    const Now = new Date(),
-      Bday = new Date(birthday);
-    const [text, setText] = React.useState();
+  const CountDown = (birthday, name) => {
+    let Now = new Date(),
+      Bday = new Date(birthday),
+      text = "";
+    let nowBday = new Date(
+        Now.getFullYear() + "-" + Bday.getMonth() + "-" + Bday.getDate()
+      ),
+      exBday = new Date(
+        Now.getFullYear() + 1 + "-" + Bday.getMonth() + "-" + Bday.getDate()
+      );
+    var distance = nowBday.getTime() - Now.getTime();
+    if (distance < 0) {
+      distance = exBday.getTime() - Now.getTime();
+    }
     setInterval(() => {
-      let distance = Now.getTime() - Bday.getTime();
       let Days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      console.log(Days);
       let Hours = Math.floor(
         (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
       );
@@ -61,27 +57,29 @@ const Person = (props) => {
           plural = " Day ";
         }
 
-        setText(
+        text =
           Days +
-            plural +
-            Hours +
-            " Hours " +
-            Mins +
-            " Minutes Until Their Birthday!!!!"
-        );
+          plural +
+          Hours +
+          " Hours " +
+          Mins +
+          " Minutes Until Their Birthday!!!!";
       } else {
-        setText("Happy Birthday!!!");
+        text = "Happy Birthday!!!";
       }
-    }, 1000 * 60);
+      console.log(distance + " and " + Days + " of " + name);
+    }, 1000 * 30);
     return text;
   };
   return (
     <>
-      <img src={props.img} width="50" />
-      <h4>{props.name}</h4>
-      <span>{props.birthday}</span>
+      <div className="container">
+        <img src={props.img} width="50" />
+        <h4>{props.name}</h4>
+        <span>{props.birthday}</span>
 
-      <span>{CountDown(props.birthday)}</span>
+        <span>{CountDown(props.birthday, props.name)}</span>
+      </div>
     </>
   );
 };
