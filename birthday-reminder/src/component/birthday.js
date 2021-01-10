@@ -1,9 +1,9 @@
 import { Helmet } from "react-helmet";
 import peopledata from "../data.json";
 import React from "react";
-import WebWorker from "../worker";
-import WebWorkerEnabler from "../webWorkerEnabler";
-const workerInstance = new WebWorkerEnabler(WebWorker);
+//import WebWorker from "../worker";
+//import WebWorkerEnabler from "../webWorkerEnabler";
+//const workerInstance = new WebWorkerEnabler(WebWorker);
 const Birthday = () => {
   return (
     <>
@@ -17,30 +17,45 @@ const Birthday = () => {
   );
 };
 
-const PeopleList = () => {
-  //const People = JSON.parse(peopledata);
-  return (
-    <>
-      {peopledata.people.map((person) => {
-        return <Person key={person.id} {...person}></Person>;
-      })}
-    </>
-  );
-};
 class Person extends React.Component {
-  componentDidMount() {
-    workerInstance.addEventListener(
-      "message",
-      (e) => {
-        console.log("Received response:");
-        console.log(e.data);
-      },
-      false
-    );
-  }
+  // componentDidMount() {
+  //   workerInstance.addEventListener(
+  //     "message",
+  //     (e) => {
+  //       console.log("Received response:");
+  //       console.log(e.data);
+  //     },
+  //     false
+  //   );
+  // }
+
   constructor(props) {
     super(props);
     this.state = peopledata;
+  }
+  componentDidMount() {
+    const intervalId = setInterval(() => {
+      this.setState(() => {
+        console.log("this is the state " + JSON.stringify(this.state.people));
+        let newPeople = this.state.people.filter((item) => {
+          let date = new Date(item.birthday);
+          let now = new Date();
+          if (
+            date.getDate() === now.getDate() &&
+            date.getMonth() === now.getMonth()
+          ) {
+            return true;
+          }
+          return false;
+        });
+        return newPeople;
+      });
+    }, 1000);
+    this.setState({ intervalId: intervalId });
+  }
+  componentWillUnmount() {
+    // use intervalId from the state to clear the interval
+    clearInterval(this.state.intervalId);
   }
   render() {
     return (
@@ -51,9 +66,7 @@ class Person extends React.Component {
               <img src={item.img} width="50" />
               <h4>{item.name}</h4>
               <span>{item.birthday}</span>
-              <button onClick={workerInstance.postMessage("bar")}>
-                click me
-              </button>
+              <button>Dismiss</button>
               <span></span>
             </div>
           </React.Fragment>
