@@ -1,7 +1,9 @@
 import { Helmet } from "react-helmet";
 import peopledata from "../data.json";
 import React from "react";
-
+import WebWorker from "../worker";
+import WebWorkerEnabler from "../webWorkerEnabler";
+const workerInstance = new WebWorkerEnabler(WebWorker);
 const Birthday = () => {
   return (
     <>
@@ -10,7 +12,7 @@ const Birthday = () => {
         <title>Birthday Reminder</title>
         <link rel="icon" href="../icon.png" />
       </Helmet>
-      <PeopleList></PeopleList>
+      <Person></Person>
     </>
   );
 };
@@ -25,62 +27,39 @@ const PeopleList = () => {
     </>
   );
 };
-const Person = (props) => {
-  const CountDown = (birthday, name) => {
-    let Now = new Date(),
-      Bday = new Date(birthday),
-      text = "";
-    let nowBday = new Date(
-        Now.getFullYear() + "-" + Bday.getMonth() + "-" + Bday.getDate()
-      ),
-      exBday = new Date(
-        Now.getFullYear() + 1 + "-" + Bday.getMonth() + "-" + Bday.getDate()
-      );
-    var distance = nowBday.getTime() - Now.getTime();
-    if (distance < 0) {
-      distance = exBday.getTime() - Now.getTime();
-    }
-    setInterval(() => {
-      let Days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      let Hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      let Mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      if (
-        Now.getDate() !== Bday.getMonth() &&
-        Now.getMonth() !== Bday.getMonth()
-      ) {
-        let plural;
-        if ((Days = 1)) {
-          plural = " Days ";
-        } else {
-          plural = " Day ";
-        }
-
-        text =
-          Days +
-          plural +
-          Hours +
-          " Hours " +
-          Mins +
-          " Minutes Until Their Birthday!!!!";
-      } else {
-        text = "Happy Birthday!!!";
-      }
-      console.log(distance + " and " + Days + " of " + name);
-    }, 1000 * 30);
-    return text;
-  };
-  return (
-    <>
-      <div className="container">
-        <img src={props.img} width="50" />
-        <h4>{props.name}</h4>
-        <span>{props.birthday}</span>
-
-        <span>{CountDown(props.birthday, props.name)}</span>
-      </div>
-    </>
-  );
-};
+class Person extends React.Component {
+  componentDidMount() {
+    workerInstance.addEventListener(
+      "message",
+      (e) => {
+        console.log("Received response:");
+        console.log(e.data);
+      },
+      false
+    );
+  }
+  constructor(props) {
+    super(props);
+    this.state = peopledata;
+  }
+  render() {
+    return (
+      <>
+        {this.state.people.map((item) => (
+          <React.Fragment key={item.id}>
+            <div className="container">
+              <img src={item.img} width="50" />
+              <h4>{item.name}</h4>
+              <span>{item.birthday}</span>
+              <button onClick={workerInstance.postMessage("bar")}>
+                click me
+              </button>
+              <span></span>
+            </div>
+          </React.Fragment>
+        ))}
+      </>
+    );
+  }
+}
 export default Birthday;

@@ -1,17 +1,9 @@
 // worker.js
-const workercode = () => {
-  self.onmessage = function (e) {
-    console.log("Message received from main script");
-    var workerResult = "Received from main: " + e.data;
-    console.log("Posting message back to main script");
-    self.postMessage(workerResult);
+export default function WebWorker(args) {
+  let onmessage = (e) => {
+    console.log(e.data);
+    // eslint-disable-line no-unused-vars
+    // THIS IS THE PLACE YOU EMBED YOUR CODE THAT WILL RUN IN BACKGROUND
+    postMessage("Response");
   };
-};
-
-let code = workercode.toString();
-code = code.substring(code.indexOf("{") + 1, code.lastIndexOf("}"));
-
-const blob = new Blob([code], { type: "application/javascript" });
-const worker_script = URL.createObjectURL(blob);
-
-module.exports = worker_script;
+}
