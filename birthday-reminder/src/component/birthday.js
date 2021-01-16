@@ -32,12 +32,12 @@ class Person extends React.Component {
   constructor(props) {
     super(props);
     this.state = peopledata;
+    this.dismissNotif = this.dismissNotif.bind(this);
   }
   componentDidMount() {
     const intervalId = setInterval(() => {
-      this.setState(() => {
-        console.log("this is the state " + JSON.stringify(this.state.people));
-        let newPeople = this.state.people.filter((item) => {
+      this.setState({
+        people: this.state.people.filter((item) => {
           let date = new Date(item.birthday);
           let now = new Date();
           if (
@@ -47,8 +47,7 @@ class Person extends React.Component {
             return true;
           }
           return false;
-        });
-        return newPeople;
+        }),
       });
     }, 1000);
     this.setState({ intervalId: intervalId });
@@ -57,6 +56,12 @@ class Person extends React.Component {
     // use intervalId from the state to clear the interval
     clearInterval(this.state.intervalId);
   }
+  dismissNotif = (userId) => {
+    this.setState((prevState) => {
+      let people = prevState.people.filter((item) => item.id != userId);
+      return { people };
+    });
+  };
   render() {
     return (
       <>
@@ -66,7 +71,13 @@ class Person extends React.Component {
               <img src={item.img} width="50" />
               <h4>{item.name}</h4>
               <span>{item.birthday}</span>
-              <button>Dismiss</button>
+              <button
+                onClick={() => {
+                  this.dismissNotif(item.id);
+                }}
+              >
+                Dismiss
+              </button>
               <span></span>
             </div>
           </React.Fragment>
