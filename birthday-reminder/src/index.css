@@ -7,12 +7,26 @@ body {
 
 .container {
   display: flex;
-  flex-direction: column;
-
+  flex-direction: row;
   position: relative;
   background: none;
-
   max-width: 50rem;
   color: ivory;
   overflow: auto;
+  margin: 2rem 0 2rem 0;
+  flex-wrap: wrap;
+  padding: 5px;
+}
+.container > span,
+img,
+button {
+  margin: 5px;
+}
+.avatar {
+  border-radius: 50% !important;
+  background-color: azure;
+  width: auto;
+  height: auto;
+  max-width: 4rem;
+  max-height: 4rem;
 }

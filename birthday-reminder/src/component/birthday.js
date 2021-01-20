@@ -68,8 +68,8 @@ class Person extends React.Component {
         {this.state.people.map((item) => (
           <React.Fragment key={item.id}>
             <div className="container">
-              <img src={item.img} width="50" />
-              <h4>{item.name}</h4>
+              <img src={item.img} width="50" className="avatar" />
+              <span>{item.name}</span>
               <span>{item.birthday}</span>
               <button
                 onClick={() => {
