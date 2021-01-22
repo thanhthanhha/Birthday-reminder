@@ -1,3 +1,10 @@
+/* define font*/
+@font-face {
+  font-family: "Faster_One";
+  src: local("Faster One"),
+    url(./font/Faster_One/FasterOne-Regular.ttf) format("ttf");
+}
+
 body {
   background-color: rgb(32, 28, 28) !important;
   height: 100vh;
@@ -16,11 +23,15 @@ body {
   margin: 2rem 0 2rem 0;
   flex-wrap: wrap;
   padding: 5px;
+  align-items: center;
 }
 .container > span,
 img,
 button {
   margin: 5px;
+}
+.container > button {
+  font-family: Faster_One;
 }
 .avatar {
   border-radius: 50% !important;
