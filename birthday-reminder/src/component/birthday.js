@@ -7,7 +7,6 @@ import React from "react";
 const Birthday = () => {
   return (
     <>
-      <h2>Birthday Reminder</h2>
       <Helmet>
         <title>Birthday Reminder</title>
         <link rel="icon" href="../icon.png" />
@@ -65,23 +64,39 @@ class Person extends React.Component {
   render() {
     return (
       <>
-        {this.state.people.map((item) => (
-          <React.Fragment key={item.id}>
-            <div className="container">
-              <img src={item.img} width="50" className="avatar" />
-              <span>{item.name}</span>
-              <span>{item.birthday}</span>
-              <button
-                onClick={() => {
-                  this.dismissNotif(item.id);
-                }}
-              >
-                Dismiss
-              </button>
-              <span></span>
+        <div className="bigContain">
+          <div>
+            {this.state.people.map((item) => (
+              <React.Fragment key={item.id}>
+                <div className="container">
+                  <img src={item.img} width="50" className="avatar" />
+                  <span>{item.name}</span>
+                  <span>{item.birthday}</span>
+                  <button
+                    onClick={() => {
+                      this.dismissNotif(item.id);
+                    }}
+                  >
+                    DISMISS
+                  </button>
+                  <span></span>
+                </div>
+              </React.Fragment>
+            ))}
+          </div>
+          <div className="header">
+            <div>
+              <div>
+                Birthday
+                <br></br>Reminder
+                <span id="red">
+                  Birthday
+                  <br></br>Reminder
+                </span>
+              </div>
             </div>
-          </React.Fragment>
-        ))}
+          </div>
+        </div>
       </>
     );
   }

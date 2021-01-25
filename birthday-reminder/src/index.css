@@ -4,15 +4,71 @@
   src: local("Faster One"),
     url(./font/Faster_One/FasterOne-Regular.ttf) format("ttf");
 }
-
+@font-face {
+  font-family: "Anton_Mine";
+  src: local("Anton"), url(./font/Anton/Anton-Regular.otf) format("truetype");
+}
+:root {
+  --neon-text-color: yellow;
+  min-width: 100%;
+}
+#root {
+  min-width: 100%;
+}
 body {
-  background-color: rgb(32, 28, 28) !important;
+  background-color: black !important;
   height: 100vh;
   min-width: 100%;
   display: flex;
 }
-
+.header {
+  height: 50rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.header > div {
+  align-self: center;
+  display: flexbox;
+  position: fixed;
+  color: white;
+  font-family: Anton_Mine;
+  text-align: center;
+  height: 16rem;
+  min-width: 25rem;
+  line-height: 4rem;
+  justify-content: center;
+  font-size: 4rem;
+  font-weight: bold;
+}
+.header > div > div {
+  position: relative;
+  animation: blip-red 1s linear 1.5s infinite alternate;
+  -moz-animation: blip-red 2s infinite alternate;
+}
+.header > div > div > span {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  text-shadow: none;
+}
+.bigContain {
+  display: grid;
+  grid-template-columns: auto auto;
+  min-width: 100%;
+  min-height: 100%;
+  vertical-align: middle;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
 .container {
+  font-family: Anton_Mine;
+  font-weight: lighter;
+  font-style: italic;
+  word-spacing: 0.1rem;
+  font-size: 1rem;
   display: flex;
   flex-direction: row;
   position: relative;
@@ -31,7 +87,21 @@ button {
   margin: 5px;
 }
 .container > button {
+  padding-left: 2rem;
+  border: none;
   font-family: Faster_One;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: red;
+  text-shadow: -0.05rem 0 0.0015rem var(--neon-text-color);
+}
+.container > button:hover {
+  animation: flicker 1.5s infinite alternate;
+  -moz-animation: flicker 1.5s infinite alternate;
+}
+.container > button:focus {
+  outline: 0;
 }
 .avatar {
   border-radius: 50% !important;
@@ -40,4 +110,47 @@ button {
   height: auto;
   max-width: 4rem;
   max-height: 4rem;
+}
+
+/*animation*/
+@keyframes flicker {
+  0%,
+  19%,
+  21%,
+  23%,
+  25%,
+  54%,
+  56%,
+  100% {
+    text-shadow: 0.01rem 0 0.005rem var(--neon-text-color),
+      -0.15rem 0 0.005rem var(--neon-text-color),
+      -0.16rem -0.002rem 0.0015rem #fff, -0.13rem 0.002rem 0.0015rem #fff,
+      -0.15rem 0 0.1rem var(--neon-text-color),
+      -0.15rem 0 0.25rem var(--neon-text-color),
+      -0.15rem 0 0.5rem var(--neon-text-color);
+    opacity: 1;
+  }
+  20%,
+  24%,
+  55% {
+    text-shadow: none;
+  }
+}
+@keyframes blip-yellow {
+  0%,
+  100% {
+    text-shadow: 1.5rem -1rem 0 black;
+  }
+  33% {
+    text-shadow: 1.5rem -1rem 0 yellow;
+  }
+}
+@keyframes blip-red {
+  0% {
+    text-shadow: -1.5rem 1rem 0 red, 1.5rem -1rem 0 black;
+  }
+
+  100% {
+    text-shadow: -1.5rem 1rem 0 black, 1.5rem -1rem 0 yellow;
+  }
 }

@@ -3,7 +3,7 @@
     {
       "id": 1,
       "name": "Julian Fayard",
-      "birthday": "2003-11-20",
+      "birthday": "2003-01-24",
       "img": "/Images/julian.jpeg"
     },
     {
@@ -27,19 +27,19 @@
     {
       "id": 5,
       "name": "Lola",
-      "birthday": "2005-03-20",
+      "birthday": "2005-01-23",
       "img": "/Images/Lola.JPG"
     },
     {
       "id": 6,
       "name": "Kyle Thomas",
-      "birthday": "2001-09-20",
+      "birthday": "2001-01-23",
       "img": "/Images/Kyle.jpeg"
     },
     {
       "id": 7,
       "name": "Ked Merwin",
-      "birthday": "2003-10-27",
+      "birthday": "2003-01-24",
       "img": "/Images/Ked.jpeg"
     }
   ]
