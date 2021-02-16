@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet";
 import peopledata from "../data.json";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useTransition, animated, useSpring } from "react-spring";
 //import WebWorker from "../worker";
 //import WebWorkerEnabler from "../webWorkerEnabler";
 //const workerInstance = new WebWorkerEnabler(WebWorker);
@@ -15,7 +16,97 @@ const Birthday = () => {
     </>
   );
 };
+const PersonList = () => {
+  //set State
 
+  const [people, setPeople] = useState(peopledata.people);
+  // setPeople((prevState) => {
+  //   let newpeople = peopledata.people.filter((item) => {
+  //     let date = new Date(item.birthday);
+  //     let now = new Date();
+  //     if (
+  //       date.getDate() === now.getDate() &&
+  //       date.getMonth() === now.getMonth()
+  //     ) {
+  //       return true;
+  //     }
+  //     return false;
+  //   });
+  //   return newpeople;
+  // });
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setPeople((prevState) => {
+        let newpeople = prevState.filter((item) => {
+          let date = new Date(item.birthday);
+          let now = new Date();
+          if (
+            date.getDate() === now.getDate() &&
+            date.getMonth() === now.getMonth()
+          ) {
+            return true;
+          }
+          return false;
+        });
+        return newpeople;
+      });
+    }, 1000);
+    return () => clearInterval(intervalId);
+  }, []);
+
+  //transition
+  const transitions = useTransition(people, (item) => item.id, {
+    enter: { transform: "translateX(0rem)", opacity: 1 },
+    leave: { transform: "translateX(-20rem)", opacity: 0 },
+    config: { duration: 500 },
+  });
+  console.log(transitions);
+  var dismissNotif = (userId) => {
+    setPeople((prevState) => {
+      let newpeople = prevState.filter((item) => item.id != userId);
+
+      console.log("the prev " + newpeople);
+      return newpeople;
+    });
+  };
+  return (
+    <>
+      <div className="bigContain">
+        <div>
+          {transitions.map(({ item, key, props }) => (
+            <React.Fragment key={item.id}>
+              <animated.div className="container" style={props}>
+                <img src={item.img} width="50" className="avatar" />
+                <span>{item.name}</span>
+                <span>{item.birthday}</span>
+                <button
+                  onClick={() => {
+                    dismissNotif(item.id);
+                  }}
+                >
+                  DISMISS
+                </button>
+                <span></span>
+              </animated.div>
+            </React.Fragment>
+          ))}
+        </div>
+        <div className="header">
+          <div>
+            <div>
+              Birthday
+              <br></br>Reminder
+              <span id="red">
+                Birthday
+                <br></br>Reminder
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 class Person extends React.Component {
   // componentDidMount() {
   //   workerInstance.addEventListener(
@@ -30,75 +121,9 @@ class Person extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = peopledata;
-    this.dismissNotif = this.dismissNotif.bind(this);
   }
-  componentDidMount() {
-    const intervalId = setInterval(() => {
-      this.setState({
-        people: this.state.people.filter((item) => {
-          let date = new Date(item.birthday);
-          let now = new Date();
-          if (
-            date.getDate() === now.getDate() &&
-            date.getMonth() === now.getMonth()
-          ) {
-            return true;
-          }
-          return false;
-        }),
-      });
-    }, 1000);
-    this.setState({ intervalId: intervalId });
-  }
-  componentWillUnmount() {
-    // use intervalId from the state to clear the interval
-    clearInterval(this.state.intervalId);
-  }
-  dismissNotif = (userId) => {
-    this.setState((prevState) => {
-      let people = prevState.people.filter((item) => item.id != userId);
-      return { people };
-    });
-  };
   render() {
-    return (
-      <>
-        <div className="bigContain">
-          <div>
-            {this.state.people.map((item) => (
-              <React.Fragment key={item.id}>
-                <div className="container">
-                  <img src={item.img} width="50" className="avatar" />
-                  <span>{item.name}</span>
-                  <span>{item.birthday}</span>
-                  <button
-                    onClick={() => {
-                      this.dismissNotif(item.id);
-                    }}
-                  >
-                    DISMISS
-                  </button>
-                  <span></span>
-                </div>
-              </React.Fragment>
-            ))}
-          </div>
-          <div className="header">
-            <div>
-              <div>
-                Birthday
-                <br></br>Reminder
-                <span id="red">
-                  Birthday
-                  <br></br>Reminder
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </>
-    );
+    return <PersonList></PersonList>;
   }
 }
 export default Birthday;

@@ -147,10 +147,10 @@ button {
 }
 @keyframes blip-red {
   0% {
-    text-shadow: -1.5rem 1rem 0 red, 1.5rem -1rem 0 black;
+    text-shadow: -1.5rem 1rem 0 red, 1.5rem -1rem 0 rgba(0, 0, 0, 0);
   }
 
   100% {
-    text-shadow: -1.5rem 1rem 0 black, 1.5rem -1rem 0 yellow;
+    text-shadow: -1.5rem 1rem 0 rgba(0, 0, 0, 0), 1.5rem -1rem 0 yellow;
   }
 }
